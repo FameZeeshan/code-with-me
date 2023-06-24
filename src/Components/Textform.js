@@ -1,87 +1,123 @@
 import React, { useState } from "react";
 
-export default function Textform(props) {
+export default function TextForm(props) {
   const handleUpClick = () => {
     let newText = text.toUpperCase();
     setText(newText);
+    props.showAlert("Converted to uppercase!", "success");
   };
+
   const handleLoClick = () => {
     let newText = text.toLowerCase();
     setText(newText);
+    props.showAlert("Converted to lowercase!", "success");
   };
+
   const handleClearClick = () => {
     let newText = "";
     setText(newText);
+    props.showAlert("Text Cleared!", "success");
   };
+
+  const handleOnChange = (event) => {
+    setText(event.target.value);
+  };
+
+  // Credits: A
   const handleCopy = () => {
-    let newText = document.getElementById("myBox");
-    newText.select();
-    newText.setSelectionRange(0, 9999);
-    navigator.clipboard.writeText(newText.value);
+    navigator.clipboard.writeText(text);
+    props.showAlert("Copied to Clipboard!", "success");
   };
-  const handleExtraSpace = () => {
-    // Using Regex below, the text is being split based on spaces
+
+  // Credits: Coding Wala
+  const handleExtraSpaces = () => {
     let newText = text.split(/[ ]+/);
-    // Using join function to join the text again with space
     setText(newText.join(" "));
+    props.showAlert("Extra spaces removed!", "success");
   };
 
-  const handleOnChange = (e) => {
-    // event- is now depriciated
-    // setText(event.target.value) is replaced with setText(window.Event.value)
-    setText(e.target.value);
-  };
   const [text, setText] = useState("");
-
+  // text = "new text"; // Wrong way to change the state
+  // setText("new text"); // Correct way to change the state
   return (
-    <div>
+    <>
       <div
         className="container"
-        style={{
-          backgroundColor: props.mode === "dark" ? "grey" : "white",
-          color: props.mode === "dark" ? "white" : "black",
-        }}
+        style={{ color: props.mode === "dark" ? "white" : "#042743" }}
       >
-        <h2>{props.heading}</h2>
+        <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
           <textarea
             className="form-control"
             value={text}
             onChange={handleOnChange}
+            style={{
+              backgroundColor: props.mode === "dark" ? "#13466e" : "white",
+              color: props.mode === "dark" ? "white" : "#042743",
+            }}
             id="myBox"
             rows="8"
           ></textarea>
         </div>
-        <button className="btn btn-primary m-2" onClick={handleUpClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleUpClick}
+        >
           Convert to Uppercase
         </button>
-        <button className="btn btn-success m-2" onClick={handleLoClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleLoClick}
+        >
           Convert to Lowercase
         </button>
-        <button className="btn btn-danger m-2" onClick={handleClearClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleClearClick}
+        >
           Clear Text
         </button>
-        <button className="btn btn-danger m-2" onClick={handleCopy}>
-          Copy text
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleCopy}
+        >
+          Copy Text
         </button>
-        <button className="btn btn-primary m-2" onClick={handleExtraSpace}>
-          Remove extra space
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleExtraSpaces}
+        >
+          Remove Extra Spaces
         </button>
       </div>
       <div
-        className="container"
-        style={{
-          backgroundColor: props.mode === "dark" ? "grey" : "white",
-        }}
+        className="container my-3"
+        style={{ color: props.mode === "dark" ? "white" : "#042743" }}
       >
-        <h1>Your text summary has:</h1>
+        <h2>Your text summary</h2>
         <p>
-          {text.split(" ").length} words and {text.length} characters
+          {
+            text.split(/\s+/).filter((element) => {
+              return element.length !== 0;
+            }).length
+          }{" "}
+          words and {text.length} characters
         </p>
-        <p>It takes {0.008 * text.split(" ").length} minutes to read</p>
-        <h3>Preview:</h3>
-        <p>{text}</p>
+        <p>
+          {0.008 *
+            text.split(/\s+/).filter((element) => {
+              return element.length !== 0;
+            }).length}{" "}
+          Minutes read
+        </p>
+        <h2>Preview</h2>
+        <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
       </div>
-    </div>
+    </>
   );
 }

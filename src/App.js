@@ -2,7 +2,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navbar from "./Components/Navbar";
-import TextForm from "./Components/TextForm";
+import Textform from "./Components/Textform";
 import About from "./Components/About";
 import Alert from "./Components/Alert";
 

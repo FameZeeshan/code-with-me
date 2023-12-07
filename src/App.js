@@ -1,12 +1,13 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./Components/navbar";
+import TextForm from "./Components/textform";
+import About from "./Components/about";
+import Alert from "./Components/alert";
 
-import TextForm from "./components/TextForm";
-import About from "./components/About";
 import React, { useState } from "react";
-import Alert from "./components/Alert";
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {

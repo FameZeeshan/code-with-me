@@ -1,10 +1,10 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Navbar from "./Components/navbar";
-import TextForm from "./Components/textform";
-import About from "./Components/about";
-import Alert from "./Components/alert";
+import Navbar from "./Components/Navbar";
+import TextForm from "./Components/TextForm";
+import About from "./Components/About";
+import Alert from "./Components/Alert";
 
 import React, { useState } from "react";
 
